@@ -103,6 +103,7 @@
     
     - name: wait for the app to come up
       wait_for:
+        host: {{ hostname }}
         port: 9200
         delay: 10
         timeout: 60
