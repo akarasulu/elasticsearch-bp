@@ -115,7 +115,8 @@
       file:
         path: /etc/elasticsearch
         owner: elasticsearch
-        resurse: yes
+        recurse: yes
+        state: file
 
     - name:
       systemd:
