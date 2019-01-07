@@ -63,9 +63,6 @@
       unarchive: 
         src: /root/elasticsearch-6.5.4.tar.gz
         dest: /usr/share/elasticsearch
-        remote_source: yes
-        extra_opts:
-          - --strip-components=1
       
       # purposefully not using this elasticsearch_plugin 
     - name: Install the analysis-icu plugin
