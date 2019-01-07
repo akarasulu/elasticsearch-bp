@@ -95,7 +95,7 @@
     - name: Massage elasticsearch.yml values
       lineinfile:
         path: /etc/elasticsearch/elasticsearch.yml
-        regexp: 'network.host:'
+        regexp: 'network.host:.*'
         line: 'network.host: {{ ansible_default_ipv4.address }}'
 
     - name: Install the jvm.options file
