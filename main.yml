@@ -89,7 +89,7 @@
 
     - name: Massage elasticsearch.service values
       lineinfile:
-        path: /etc/elasticsearch/elasticsearch.yml
+        path: /etc/systemd/system/elasticsearch.service
         regexp: 'network.host='
         line: 'network.host={{ ansible_default_ipv4.address }}'
 
