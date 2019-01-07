@@ -96,8 +96,9 @@
       blockinfile:
         path: /etc/environment
         block: |
-          ES_PATH_CONF=/etc/elasticsearch/elasticsearch.yml
+          ES_PATH_CONF=/etc/elasticsearch
           ES_NETWORK_HOST={{ ansible_default_ipv4.address }}
+          ES_JAVA_OPTS="-Xmx3g -Xms1g"
 
     - name:
       systemd:
