@@ -7,4 +7,4 @@ path:
 
 http.port: 9200
 node.name: ${HOSTNAME}
-network.host: ${ES_NETORK_HOST}
+network.host: 
