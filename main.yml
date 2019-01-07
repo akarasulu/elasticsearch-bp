@@ -111,6 +111,12 @@
           ES_NETWORK_HOST={{ ansible_default_ipv4.address }}
           ES_JAVA_OPTS="-Xmx3g -Xms1g"
 
+    - name: Change the mode of the files for elasticsearch user
+      file:
+        path: /etc/elasticsearch
+        owner: elasticsearch
+        resurse: yes
+
     - name:
       systemd:
         name: elasticsearch
