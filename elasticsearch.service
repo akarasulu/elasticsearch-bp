@@ -1,14 +1,14 @@
 [Unit]
-Description=pgAdmin4
+Description=elasticsearch
 After=network.target
-User=pgadmin
-Group=pgadmin
-RootDirectory=/var/lib/pgadmin
+User=elasticsearch
+Group=elasticsearch
+RootDirectory=/var/lib/elasticsearch
 
 [Service]
 Type=simple
 Restart=always
-ExecStart=/usr/bin/uwsgi /var/lib/pgadmin/pgadmin4.ini
+ExecStart=/usr/share/elasticsearch/bin/elasticsearch -c /var/lib/elasticsearch/elasticsearch.ini
 
 [Install]
 WantedBy=multi-user.target

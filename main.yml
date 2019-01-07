@@ -5,6 +5,8 @@
   remote_user: root
   tasks:
 
+    - debug: var=ansible_default_ipv4.address
+
     # -------------------------------------------------------------------------
     # Freshen up the host
     # -------------------------------------------------------------------------
@@ -39,22 +41,64 @@
       command: bash /root/locales_setup.sh
 
     # -------------------------------------------------------------------------
-    # Elasticsearch Repository and Install
+    # Elasticsearch User, Install, Configs
     # -------------------------------------------------------------------------
 
-    - name: Install repository keys for elasticsearch repo
-      apt_key: 
-        url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
-        state: present
-    
-    - name: Add binary repository for elasticsearch repo
-      apt_repository:
-        repo: deb https://artifacts.elastic.co/packages/6.x/apt stable main
-        update_cache: true
-        state: present
-    
-    - name: Install elasticsearch packages
-      apt:
+    - name: Create elasticsearch user
+      user:
         name: elasticsearch
+        password: "{{ subutai.user_variables.password }}"
         state: present
+        shell: /bin/bash
+        system: no
+        createhome: no
+        home: /var/lib/elasticsearch
 
+    - name: Pull down and expand elasticsearch tarball
+      unarchive: 
+        src: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.5.4.tar.gz
+        dest: /usr/share/elasticsearch
+        extra_opts:
+          - --strip-components=1
+      
+      # purposefully not using this elasticsearch_plugin 
+    - name: Install the analysis-icu plugin
+      command: /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-icu
+    
+    - name: Install the systemd initialization file
+      copy:
+        src: elasticsearch.service
+        dest: /etc/systemd/system/elasticsearch.service
+
+    - name: Install the configuration file
+      copy:
+        src: elasticsearch.yml
+        dest: /etc/elasticsearch/
+
+    - name: Add environment configuration block
+      blockinfile:
+        path: /etc/environment
+        block: |
+          ES_PATH_CONF=/etc/elasticsearch/elasticsearch.yml
+          ES_NETWORK_HOST={{ ansible_default_ipv4.address }}
+
+    - name:
+      systemd:
+        name: elasticsearch
+        state: started
+        enabled: yes
+        daemon_reload: yes
+    
+    - name: wait for the app to come up
+      wait_for:
+        port: 9200
+        delay: 10
+        timeout: 60
+
+    - name:
+      uri:
+        url: http://{{hostname}}:9200/api/plugins
+        register: response
+        failed_when: "'analysis-icu' not in response.content"
+      retries: 3
+      delay: 10
