@@ -58,6 +58,12 @@
       get_url:
         url: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.5.4.tar.gz
         dest: /root/elasticsearch-6.5.4.tar.gz
+  
+    - name: Create /usr/share/elasticsearch
+      file:
+        path: /usr/share/elasticsearch
+        state: directory
+        mode: 0755 
 
     - name: Untar elasticsearch tarball
       unarchive: 
