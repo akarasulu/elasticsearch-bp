@@ -57,11 +57,11 @@
     - name: Download ES tarball
       get_url:
         url: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.5.4.tar.gz
-        dest: elasticsearch-6.5.4.tar.gz
+        dest: /root/elasticsearch-6.5.4.tar.gz
 
     - name: Untar elasticsearch tarball
       unarchive: 
-        src: elasticsearch-6.5.4.tar.gz
+        src: /root/elasticsearch-6.5.4.tar.gz
         dest: /usr/share/elasticsearch
         remote_source: yes
         extra_opts:
