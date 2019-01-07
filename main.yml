@@ -92,6 +92,11 @@
         src: elasticsearch.yml
         dest: /etc/elasticsearch/
 
+    - name: Install the jvm.options file
+      copy:
+        src: jvm.options
+        dest: /etc/elasticsearch/
+
     - name: Add environment configuration block
       blockinfile:
         path: /etc/environment
