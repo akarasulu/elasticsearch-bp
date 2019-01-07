@@ -73,9 +73,14 @@
         extra_opts:
           - --strip-components=1
       
-      # purposefully not using this elasticsearch_plugin 
+    # purposefully not using this elasticsearch_plugin 
+    - name: Remove analysis-icu plugin
+      command: /usr/share/elasticsearch/bin/elasticsearch-plugin remove analysis-icu
+      ignore_errors: yes
+    
+    # purposefully not using this elasticsearch_plugin 
     - name: Install the analysis-icu plugin
-      command: /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-icu
+      command: /usr/share/elasticsearch/bin/elasticsearch-plugin --silent install analysis-icu
     
     - name: Install the systemd initialization file
       copy:
