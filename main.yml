@@ -59,10 +59,11 @@
         url: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.5.4.tar.gz
         dest: /tmp/elasticsearch-6.5.4.tar.gz
 
-    - name: Pull down and expand elasticsearch tarball
+    - name: Untar elasticsearch tarball
       unarchive: 
         src: /tmp/elasticsearch-6.5.4.tar.gz
         dest: /usr/share/elasticsearch
+        remote_source: yes
         extra_opts:
           - --strip-components=1
       
