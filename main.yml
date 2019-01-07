@@ -54,9 +54,14 @@
         createhome: no
         home: /var/lib/elasticsearch
 
+    - name: Download ES tarball
+      get_url:
+        url: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.5.4.tar.gz
+        dest: /tmp/elasticsearch-6.5.4.tar.gz
+
     - name: Pull down and expand elasticsearch tarball
       unarchive: 
-        src: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.5.4.tar.gz
+        src: /tmp/elasticsearch-6.5.4.tar.gz
         dest: /usr/share/elasticsearch
         extra_opts:
           - --strip-components=1
