@@ -1,0 +1,14 @@
+[Unit]
+Description=pgAdmin4
+After=network.target
+User=pgadmin
+Group=pgadmin
+RootDirectory=/var/lib/pgadmin
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/bin/uwsgi /var/lib/pgadmin/pgadmin4.ini
+
+[Install]
+WantedBy=multi-user.target

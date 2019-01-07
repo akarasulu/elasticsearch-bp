@@ -1,0 +1,59 @@
+# Ansible Playbook for Subutai Elasticsearch Blueprint
+--- 
+
+- hosts: elasticsearch
+  remote_user: root
+  tasks:
+
+    # -------------------------------------------------------------------------
+    # Freshen up the host
+    # -------------------------------------------------------------------------
+
+    - name: Disable dpkg fsync
+      raw: test -e /etc/dpkg/dpkg.cfg.d/unsafe-io || echo force-unsafe-io > /etc/dpkg/dpkg.cfg.d/unsafe-io
+
+    - name: Upgrade packages
+      apt:
+        update_cache: true
+        upgrade: true
+
+    # -------------------------------------------------------------------------
+    # Install shit that should be there and fix locales
+    # -------------------------------------------------------------------------
+
+    - name: Install setup tools
+      apt:
+        name: 
+          - dirmngr
+          - apt-transport-https
+          - ca-certificates
+          - sudo
+          - locales
+          - curl
+
+    - name: Transfer locales_setup.sh
+      copy: src=locales_setup.sh dest=/root/locales_setup.sh
+
+    - name: Execute locales_setup.sh
+      command: bash /root/locales_setup.sh
+
+    # -------------------------------------------------------------------------
+    # Elasticsearch Repository and Install
+    # -------------------------------------------------------------------------
+
+    - name: Install repository keys for elasticsearch repo
+      apt_key: 
+        url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+        state: present
+    
+    - name: Add binary repository for elasticsearch repo
+      apt_repository:
+        repo: deb https://artifacts.elastic.co/packages/6.x/apt stable main
+        update_cache: true
+        state: present
+    
+    - name: Install elasticsearch packages
+      apt:
+        name: elasticsearch
+        state: present
+

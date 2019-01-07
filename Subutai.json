@@ -1,0 +1,84 @@
+{
+    "name": "${environmentName}",
+    "description": "A Subutai Blueprint for Elasticsearch Server",
+    "version": "1.0.0",
+    "ssh-key": "elasticsearch",
+    "author": "https://github.com/akarasulu",
+    "containers": [
+        {
+            "hostname": "elasticsearch",
+            "template": "debian-stretch",
+            "peer-criteria": "APP-GROUP",
+            "size": "${containerSize}",
+            "port-mapping": [
+                {
+                    "protocol": "https",
+                    "domain": "${domain}",
+                    "internal-port": "80",
+                    "external-port": "443"
+                }
+            ]
+        }
+    ],
+    "peer-criteria": [
+        {
+            "name": "APP-GROUP"
+        }
+    ],
+    "ansible-configuration": {
+        "source-url": "https://github.com/akarasulu/elasticsearch-bp/archive/master.zip",
+        "ansible-playbook": "main.yml",
+        "extra-vars": [
+            {
+                "key": "domain",
+                "value": "${domain}"
+            },
+            {
+                "key": "email",
+                "value": "${email}"
+            },
+            {
+                "key": "password",
+                "value": "${password}"
+            }
+        ],
+        "groups": [
+            {
+                "name": "elasticsearch",
+                "hostnames": [
+                    "elasticsearch"
+                ]
+            }
+        ]
+    },
+    "user-variables": {
+        "environmentName": {
+            "description": "Environment's name",
+            "type": "string",
+            "default": "elasticsearch",
+            "validation": "[a-zA-Z0-9_]+"
+        },
+        "domain": {
+            "description": "Domain name",
+            "type": "domain",
+            "default": "h.envs.subut.ai",
+            "validation": "[a-zA-Z0-9_]+"
+        },
+        "email": {
+            "description": "Email for elasticsearch user",
+            "type": "string",
+            "default": "alex@example.com"
+        },
+        "password": {
+            "description": "Common password: whatever needs auth",
+            "type": "string",
+            "default": "secret"
+        },
+        "containerSize": {
+            "description": "Container Size",
+            "type": "enum",
+            "default": "HUGE",
+            "validation": "LARGE,HUGE"
+        }
+    }
+}
