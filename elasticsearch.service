@@ -9,7 +9,7 @@ RootDirectory=/var/lib/elasticsearch
 EnvironmentFile=/etc/environment
 Type=simple
 Restart=always
-ExecStart=/usr/share/elasticsearch/bin/elasticsearch
+ExecStart=/usr/share/elasticsearch/bin/elasticsearch -E network.host=
 
 [Install]
 WantedBy=multi-user.target
