@@ -30,6 +30,7 @@
           - sudo
           - locales
           - curl
+          - default-jdk
 
     - name: Transfer locales_setup.sh
       copy: src=locales_setup.sh dest=/root/locales_setup.sh
