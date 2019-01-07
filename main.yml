@@ -51,7 +51,7 @@
         state: present
         shell: /bin/bash
         system: no
-        createhome: no
+        createhome: yes
         home: /var/lib/elasticsearch
 
     - name: Download ES tarball
