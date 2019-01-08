@@ -90,8 +90,8 @@
     - name: Massage elasticsearch.service values
       lineinfile:
         path: /etc/systemd/system/elasticsearch.service
-        regexp: 'network.host='
-        line: 'network.host={{ ansible_default_ipv4.address }}'
+        regexp: '.*network.host=$'
+        line: 'ExecStart=/usr/share/elasticsearch/bin/elasticsearch -E path.data /var/lib/elasticsearch/data -E network.host={{ ansible_default_ipv4.address }}'
 
     - name:
       systemd:
