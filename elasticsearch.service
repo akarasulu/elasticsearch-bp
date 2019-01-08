@@ -6,7 +6,6 @@ Group=elasticsearch
 RootDirectory=/var/lib/elasticsearch
 
 [Service]
-EnvironmentFile=/etc/environment
 Type=simple
 Restart=always
 ExecStart=/usr/share/elasticsearch/bin/elasticsearch -E network.host=
