@@ -91,7 +91,7 @@
       lineinfile:
         path: /etc/systemd/system/elasticsearch.service
         regexp: '.*network.host=$'
-        line: 'ExecStart=/usr/share/elasticsearch/bin/elasticsearch -E path.data /var/lib/elasticsearch/data -E network.host={{ ansible_default_ipv4.address }}'
+        line: 'ExecStart=/usr/share/elasticsearch/bin/elasticsearch -E discovery.type=single-node -E path.data /var/lib/elasticsearch/data -E network.host={{ ansible_default_ipv4.address }}'
 
     - name:
       systemd:
