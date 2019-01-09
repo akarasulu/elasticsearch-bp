@@ -107,7 +107,7 @@
       command: /usr/share/elasticsearch/bin/elasticsearch-plugin --silent install analysis-icu
       become: yes
       become_user: elasticsearch
-      
+
     - name: Install the systemd initialization file
       copy:
         src: elasticsearch.service
@@ -122,9 +122,14 @@
     - name:
       systemd:
         name: elasticsearch
-        state: started
+        state: stopped
         enabled: yes
         daemon_reload: yes
+    
+    - name:
+      systemd:
+        name: elasticsearch
+        state: started
     
     - name: wait for the app to come up
       wait_for:
