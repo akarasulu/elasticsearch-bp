@@ -71,7 +71,7 @@
 
     - name: Untar elasticsearch tarball
       unarchive: 
-        src: /root/elasticsearch-6.5.4.tar.gz
+        src: /var/lib/elasticsearch/elasticsearch-6.5.4.tar.gz
         dest: /usr/share/elasticsearch
         remote_src: yes
         extra_opts:
