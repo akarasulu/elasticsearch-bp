@@ -69,6 +69,22 @@
         owner: elasticsearch
         group: elasticsearch
 
+    - name: Create data directory
+      file:
+        path: /var/lib/elasticsearch/data
+        state: directory
+        mode: 0755
+        owner: elasticsearch
+        group: elasticsearch
+
+    - name: Create log directory
+      file:
+        path: /var/log/elasticsearch
+        state: directory
+        mode: 0755
+        owner: elasticsearch
+        group: elasticsearch
+
     - name: Untar elasticsearch tarball
       unarchive: 
         src: /var/lib/elasticsearch/elasticsearch-6.5.4.tar.gz
@@ -97,7 +113,7 @@
       lineinfile:
         path: /etc/systemd/system/elasticsearch.service
         regexp: '.*network.host=$'
-        line: 'ExecStart=/usr/share/elasticsearch/bin/elasticsearch -E discovery.type=single-node -E path.data /var/lib/elasticsearch/data -E network.host={{ ansible_default_ipv4.address }}'
+        line: 'ExecStart=/usr/share/elasticsearch/bin/elasticsearch -E discovery.type=single-node -E path.data=/var/lib/elasticsearch/data -E path.logs=/var/log/elasticsearch -E network.host={{ ansible_default_ipv4.address }}'
 
     - name:
       systemd:
