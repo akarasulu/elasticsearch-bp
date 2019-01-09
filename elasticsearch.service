@@ -1,14 +1,14 @@
 [Unit]
 Description=elasticsearch
 After=network.target
-User=elasticsearch
-Group=elasticsearch
 RootDirectory=/var/lib/elasticsearch
 
 [Service]
 Type=simple
 Restart=always
 ExecStart=/usr/share/elasticsearch/bin/elasticsearch -E discovery.type=single-node -E path.data=/var/lib/elasticsearch/data -E path.logs=/var/log/elasticsearch -E network.host=
+User=elasticsearch
+Group=elasticsearch
 
 [Install]
 WantedBy=multi-user.target
