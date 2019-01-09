@@ -74,8 +74,8 @@
         remote_src: yes
         extra_opts:
           - --strip-components=1
-        become: yes
-        become_user: elasticsearch
+      become: yes
+      become_user: elasticsearch
       
     # purposefully not using this elasticsearch_plugin 
     - name: Remove analysis-icu plugin
