@@ -119,14 +119,27 @@
         regexp: '.*network.host=$'
         line: 'ExecStart=/usr/share/elasticsearch/bin/elasticsearch -E discovery.type=single-node -E path.data=/var/lib/elasticsearch/data -E path.logs=/var/log/elasticsearch -E network.host={{ ansible_default_ipv4.address }}'
 
-    - name:
+    - name: Systemd reload for enabling elasticsearch service
       systemd:
         name: elasticsearch
         state: stopped
         enabled: yes
         daemon_reload: yes
     
-    - name:
+    - name: Systemd start up elasticsearch service
+      systemd:
+        name: elasticsearch
+        state: started
+    
+    - name: Create log directory
+      file:
+        path: /var/log/elasticsearch
+        mode: 0755
+        owner: elasticsearch
+        group: elasticsearch
+        recurse: yes
+
+    - name: Systemd start up elasticsearch service
       systemd:
         name: elasticsearch
         state: started
