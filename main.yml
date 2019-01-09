@@ -99,11 +99,15 @@
     - name: Remove analysis-icu plugin
       command: /usr/share/elasticsearch/bin/elasticsearch-plugin remove analysis-icu
       ignore_errors: yes
+      become: yes
+      become_user: elasticsearch
     
     # purposefully not using this elasticsearch_plugin 
     - name: Install the analysis-icu plugin
       command: /usr/share/elasticsearch/bin/elasticsearch-plugin --silent install analysis-icu
-    
+      become: yes
+      become_user: elasticsearch
+      
     - name: Install the systemd initialization file
       copy:
         src: elasticsearch.service
