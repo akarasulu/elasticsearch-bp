@@ -131,10 +131,16 @@
         name: elasticsearch
         state: started
     
-    - name: Create log directory
+    - name: Fix permissions of log directory
       file:
         path: /var/log/elasticsearch
-        mode: 0755
+        owner: elasticsearch
+        group: elasticsearch
+        recurse: yes
+
+    - name: Fix permissions of /usr/share/elasticsearch directory
+      file:
+        path: /usr/share/elasticsearch
         owner: elasticsearch
         group: elasticsearch
         recurse: yes
