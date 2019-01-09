@@ -159,7 +159,7 @@
 
     - name:
       uri:
-        url: http://{{subutai.user_variables.hostname}}:9200/_cat/plugins
+        url: http://elasticsearch:9200/_cat/plugins
         register: response
         failed_when: "'analysis-icu' not in response.content"
       retries: 3
