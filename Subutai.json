@@ -1,7 +1,7 @@
 {
     "name": "${environmentName}",
     "description": "A Subutai Blueprint for Elasticsearch Server",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "ssh-key": "elasticsearch",
     "author": "https://github.com/akarasulu",
     "containers": [
